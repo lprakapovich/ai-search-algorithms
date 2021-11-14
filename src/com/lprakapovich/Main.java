@@ -1,7 +1,7 @@
 package com.lprakapovich;
 
-import com.lprakapovich.bfs.BfsSolver;
-import com.lprakapovich.bfs.DfsSolver;
+import com.lprakapovich.solver.BfsSolver;
+import com.lprakapovich.solver.DfsSolver;
 import com.lprakapovich.puzzle.Puzzle;
 
 public class Main {

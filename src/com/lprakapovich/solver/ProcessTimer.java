@@ -1,4 +1,4 @@
-package com.lprakapovich.bfs;
+package com.lprakapovich.solver;
 
 public abstract class ProcessTimer {
 
