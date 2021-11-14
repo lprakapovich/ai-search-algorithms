@@ -130,7 +130,7 @@ public class Puzzle {
         downMoveChild = new Puzzle(board, solutionSteps);
     }
 
-    public ArrayList<Puzzle> getAllValidChildren() {
+    public ArrayList<Puzzle> getChildrenToExplore() {
         int emptyTileX = getMovableTilePosition().getX();
         int emptyTileY = getMovableTilePosition().getY();
         ArrayList<Puzzle> children = new ArrayList<>();
