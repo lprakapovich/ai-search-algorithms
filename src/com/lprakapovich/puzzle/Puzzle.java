@@ -1,58 +1,48 @@
 package com.lprakapovich.puzzle;
 
-import java.util.ArrayList;
+import com.lprakapovich.util.ArrayUtil;
 
+import java.util.ArrayList;
 
 public class Puzzle {
 
-    private final int width = 3;
+    private final int width = PuzzleConfig.DEFAULT_SIZE;
     private final int[][] board;
-    private ArrayList<Move> moves = new ArrayList<>();
+    private ArrayList<Step> solutionSteps = new ArrayList<>();
 
-    public Puzzle upChild;
-    public Puzzle downChild;
-    public Puzzle leftChild;
-    public Puzzle rightChild;
-
-    public int[][] getBoard() {
-        int[][] copy = new int[width][width];
-        for(int i = 0; i < width; i++) {
-            for (int j = 0; j < width; j++) {
-                copy[i][j] = board[i][j];
-            }
-        }
-        return copy;
-    }
-
-    public ArrayList<Move> getMoves() {
-        ArrayList<Move> copy = new ArrayList<>();
-        copy.addAll(moves);
-        return copy;
-    }
+    public Puzzle upMoveChild;
+    public Puzzle downMoveChild;
+    public Puzzle leftMoveChild;
+    public Puzzle rightMoveChild;
 
     public Puzzle(int[][] board) {
-        this.board = new int[3][3];
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                this.board[i][j] = board[i][j];
-            }
-        }
-        this.moves = new ArrayList<>();
+        this.board = ArrayUtil.getArrayCopy(board);
+        this.solutionSteps = new ArrayList<>();
     }
 
-    public Puzzle(int[][] board, ArrayList<Move> moves) {
-        this.board = new int[3][3];
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                this.board[i][j] = board[i][j];
-            }
-        }
-
-        this.moves.addAll(moves);
+    public Puzzle(int[][] board, ArrayList<Step> steps) {
+        this.board = ArrayUtil.getArrayCopy(board);
+        this.solutionSteps.addAll(steps);
     }
 
-    public void registerMove(Move move) {
-        this.moves.add(move);
+    public int[][] getBoard() {
+        return ArrayUtil.getArrayCopy(board);
+    }
+
+    public int[][] getBoardCopy() {
+        return ArrayUtil.getArrayCopy(board);
+    }
+
+    public ArrayList<Step> getSolutionSteps() {
+        return solutionSteps;
+    }
+
+    public ArrayList<Step> getSolutionStepsCopy() {
+        return new ArrayList<>(solutionSteps);
+    }
+
+    public void registerStep(Step step) {
+        this.solutionSteps.add(step);
     }
 
     public boolean isGoalBoard() {
@@ -90,91 +80,79 @@ public class Puzzle {
 
     public void moveRight() {
         Position movableTilePosition = getMovableTilePosition();
-        int x = movableTilePosition.x;
-        int y = movableTilePosition.y;
+        int x = movableTilePosition.getX();
+        int y = movableTilePosition.getY();
 
         int value = this.board[x][y + 1];
         this.board[x][y] = value;
         this.board[x][y + 1] = 0;
-        this.registerMove(Move.RIGHT);
+        this.registerStep(Step.RIGHT);
     }
 
     public void moveLeft() {
         Position movableTilePosition = getMovableTilePosition();
-        int x = movableTilePosition.x;
-        int y = movableTilePosition.y;
+        int x = movableTilePosition.getX();
+        int y = movableTilePosition.getY();
 
         int value = this.board[x][y - 1];
         this.board[x][y] = value;
         this.board[x][y - 1] = 0;
-        this.registerMove(Move.LEFT);
+        this.registerStep(Step.LEFT);
     }
 
     public void moveUp() {
         Position movableTilePosition = getMovableTilePosition();
-        int x = movableTilePosition.x;
-        int y = movableTilePosition.y;
+        int x = movableTilePosition.getX();
+        int y = movableTilePosition.getY();
 
         int value = this.board[x - 1][y];
         this.board[x][y] = value;
         this.board[x - 1][y] = 0;
-        this.registerMove(Move.UP);
+        this.registerStep(Step.UP);
     }
 
     public void moveDown() {
         Position movableTilePosition = getMovableTilePosition();
-        int x = movableTilePosition.x;
-        int y = movableTilePosition.y;
+        int x = movableTilePosition.getX();
+        int y = movableTilePosition.getY();
 
         int value = this.board[x + 1][y];
         this.board[x][y] = value;
         this.board[x + 1][y] = 0;
-        this.registerMove(Move.DOWN);
+        this.registerStep(Step.DOWN);
     }
 
-    public void printBoard() {
-        for (int i = 0; i < width; i++) {
-            System.out.println();
-            for (int j = 0; j < width; j++) {
-                System.out.print(board[i][j]);
-            }
-        }
-    }
-
-    public boolean isAnyChildGoal() {
-        return upChild.isGoalBoard() || downChild.isGoalBoard() || rightChild.isGoalBoard() || leftChild.isGoalBoard();
-    }
-
+    // TODO refactor to use java-8 streams
     public void initChildren() {
-        rightChild = new Puzzle(board, moves);
-        leftChild = new Puzzle(board, moves);
-        upChild = new Puzzle(board, moves);
-        downChild = new Puzzle(board, moves);
+        rightMoveChild = new Puzzle(board, solutionSteps);
+        leftMoveChild = new Puzzle(board, solutionSteps);
+        upMoveChild = new Puzzle(board, solutionSteps);
+        downMoveChild = new Puzzle(board, solutionSteps);
     }
 
     public ArrayList<Puzzle> getAllValidChildren() {
-        int emptyTileX = getMovableTilePosition().x;
-        int emptyTileY = getMovableTilePosition().y;
+        int emptyTileX = getMovableTilePosition().getX();
+        int emptyTileY = getMovableTilePosition().getY();
         ArrayList<Puzzle> children = new ArrayList<>();
 
         if (emptyTileX > 0) {
-            children.add(upChild);
-            upChild.moveUp();
+            children.add(upMoveChild);
+            upMoveChild.moveUp();
         }
 
         if (emptyTileX < width - 1) {
-            children.add(downChild);
-            downChild.moveDown();
+            children.add(downMoveChild);
+            downMoveChild.moveDown();
         }
 
         if (emptyTileY > 0) {
-            children.add(leftChild);
-            leftChild.moveLeft();
+            children.add(leftMoveChild);
+            leftMoveChild.moveLeft();
         }
 
         if (emptyTileY < width - 1) {
-            children.add(rightChild);
-            rightChild.moveRight();
+            children.add(rightMoveChild);
+            rightMoveChild.moveRight();
         }
 
         return children;

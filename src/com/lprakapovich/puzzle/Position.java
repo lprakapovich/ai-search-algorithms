@@ -2,11 +2,15 @@ package com.lprakapovich.puzzle;
 
 public class Position {
 
-    public int x;
-    public int y;
+    private final int x;
+    private final int y;
 
     public Position(int x, int y) {
         this.x = x;
         this.y = y;
     }
+
+    public int getY() { return this.y; }
+
+    public int getX() { return this.x; }
 }

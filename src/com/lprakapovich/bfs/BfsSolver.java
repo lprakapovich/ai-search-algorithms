@@ -1,20 +1,20 @@
 package com.lprakapovich.bfs;
 
-import com.lprakapovich.puzzle.Position;
 import com.lprakapovich.puzzle.Puzzle;
+import com.lprakapovich.util.PrintUtil;
 
 import java.util.LinkedList;
 
 public class BfsSolver implements PuzzleSolver {
 
     LinkedList<Puzzle> candidateQueue = new LinkedList<>();
-    LinkedList<Puzzle> seen = new LinkedList<>();
+    LinkedList<Puzzle> visitedCandidates = new LinkedList<>();
     Puzzle originalPuzzle;
 
     private boolean isGoalFound = false;
 
     public void solve(Puzzle puzzle) {
-        originalPuzzle = new Puzzle(puzzle.getBoard());
+        originalPuzzle = new Puzzle(puzzle.getBoardCopy());
         candidateQueue.add(puzzle);
         exploreNthLevel(puzzle);
     }
@@ -26,11 +26,10 @@ public class BfsSolver implements PuzzleSolver {
             if (!isAlreadySeen(puzzle)) {
 
                 for (Puzzle candidate : candidateQueue) {
-                    seen.add(candidate);
+                    visitedCandidates.add(candidate);
                     if (candidate.isGoalBoard()) {
                         isGoalFound = true;
-                        System.out.println("found solution");
-                        candidate.printBoard();
+                        PrintUtil.printResult(candidate);
                         break;
                     }
                 }
@@ -40,7 +39,6 @@ public class BfsSolver implements PuzzleSolver {
                     candidateQueue.forEach(candidate -> {
                         candidate.initChildren();
                         candidate.getAllValidChildren().forEach(child -> {
-
                             if (!isAlreadySeen(child)) {
                                 children.add(child);
                             }
@@ -56,7 +54,9 @@ public class BfsSolver implements PuzzleSolver {
         }
     }
 
+    // TODO refactor
     private boolean isAlreadySeen(Puzzle puzzle) {
+
         int[][] board = puzzle.getBoard();
         boolean isPresentInSeen = true;
 
@@ -64,11 +64,11 @@ public class BfsSolver implements PuzzleSolver {
             return true;
         }
 
-        if (seen.isEmpty()) {
+        if (visitedCandidates.isEmpty()) {
             return false;
         }
 
-        for (Puzzle seenPuzzle: seen) {
+        for (Puzzle seenPuzzle : visitedCandidates) {
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
                     if (seenPuzzle.getBoard()[i][j] != board[i][j]) {
@@ -78,15 +78,13 @@ public class BfsSolver implements PuzzleSolver {
             }
         };
 
-
-            for (int i = 0; i < 3; i++) {
-                for (int j = 0; j < 3; j++) {
-                    if (board[i][j] != originalPuzzle.getBoard()[i][j]) {
-                        isPresentInSeen = false;
-                    }
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[i][j] != originalPuzzle.getBoard()[i][j]) {
+                    isPresentInSeen = false;
                 }
             }
-
+        }
 
         return isPresentInSeen;
     }
