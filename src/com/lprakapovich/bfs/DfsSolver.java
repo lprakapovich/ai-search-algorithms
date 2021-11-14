@@ -4,15 +4,11 @@ import com.lprakapovich.puzzle.Puzzle;
 import com.lprakapovich.util.PrintUtil;
 
 import java.util.LinkedList;
+import java.util.Stack;
 
-public class BfsSolver extends ProcessTimer implements PuzzleSolver {
+public class DfsSolver extends ProcessTimer implements PuzzleSolver {
 
-    LinkedList<Puzzle> candidateQueue = new LinkedList<>();
-
-    // todo use set instead -> utilize puzzle container and puzzle factory
-    //  to make sure puzzles with identical boards are not recreated
-    //  but returned from the container
-
+    Stack<Puzzle> candidateQueue = new Stack<>();
     LinkedList<Puzzle> visitedCandidates = new LinkedList<>();
     Puzzle originalPuzzle;
 
@@ -56,7 +52,7 @@ public class BfsSolver extends ProcessTimer implements PuzzleSolver {
                 }
             }
 
-            Puzzle firstCandidate = candidateQueue.pollFirst();
+            Puzzle firstCandidate = candidateQueue.pop();
             exploreNthLevel(firstCandidate);
         }
     }
