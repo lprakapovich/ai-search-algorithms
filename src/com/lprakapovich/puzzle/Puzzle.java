@@ -3,6 +3,7 @@ package com.lprakapovich.puzzle;
 import com.lprakapovich.util.ArrayUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Puzzle {
 
@@ -37,10 +38,6 @@ public class Puzzle {
         return solutionSteps;
     }
 
-    public ArrayList<Step> getSolutionStepsCopy() {
-        return new ArrayList<>(solutionSteps);
-    }
-
     public void registerStep(Step step) {
         this.solutionSteps.add(step);
     }
@@ -48,7 +45,6 @@ public class Puzzle {
     public boolean isGoalBoard() {
         int[][] goalBoard = GoalBoard.getGoalBoard();
         boolean isEqual = true;
-
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < width; j++) {
                 if (goalBoard[i][j] != board[i][j]) {
@@ -122,7 +118,6 @@ public class Puzzle {
         this.registerStep(Step.DOWN);
     }
 
-    // TODO refactor to use java-8 streams
     public void initChildren() {
         rightMoveChild = new Puzzle(board, solutionSteps);
         leftMoveChild = new Puzzle(board, solutionSteps);
@@ -140,6 +135,11 @@ public class Puzzle {
             upMoveChild.moveUp();
         }
 
+        if (emptyTileY < width - 1) {
+            children.add(rightMoveChild);
+            rightMoveChild.moveRight();
+        }
+
         if (emptyTileX < width - 1) {
             children.add(downMoveChild);
             downMoveChild.moveDown();
@@ -149,12 +149,6 @@ public class Puzzle {
             children.add(leftMoveChild);
             leftMoveChild.moveLeft();
         }
-
-        if (emptyTileY < width - 1) {
-            children.add(rightMoveChild);
-            rightMoveChild.moveRight();
-        }
-
         return children;
     }
 }

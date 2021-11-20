@@ -5,12 +5,12 @@ import com.lprakapovich.puzzle.Puzzle;
 import java.util.Collection;
 import java.util.Stack;
 
-public class DfsSolver extends GraphTraversalSolver {
+public class DfsSolver extends UninformedGraphTraversalSolver {
 
-    Stack<Puzzle> candidateStack = new Stack<>();
+    private final Stack<Puzzle> candidateStack = new Stack<>();
 
     @Override
-    Puzzle getCandidateToExplore() {
+    public Puzzle getFirstCandidate() {
         return candidateStack.pop();
     }
 

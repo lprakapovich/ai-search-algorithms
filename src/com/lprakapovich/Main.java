@@ -1,26 +1,26 @@
 package com.lprakapovich;
 
+import com.lprakapovich.puzzle.Puzzle;
 import com.lprakapovich.solver.BfsSolver;
 import com.lprakapovich.solver.DfsSolver;
-import com.lprakapovich.puzzle.Puzzle;
 
 public class Main {
 
     public static void main(String[] args) {
         int[][] initBoard = {
-                {0, 2, 3},
-                {1, 4, 5},
+                {1, 2, 3},
+                {4, 0, 5},
                 {7, 8, 6}
         };
 
-        System.out.println("\nDEPTH FIRST SEARCH");
-        Puzzle puzzle = new Puzzle(initBoard);
-        DfsSolver solver = new DfsSolver();
-        solver.solve(puzzle);
+        System.out.println("\nIDDFS FIRST SEARCH");
+        Puzzle puzzle3 = new Puzzle(initBoard);
+        DfsSolver solver3 = new DfsSolver();
+        solver3.solve(puzzle3);
 
-        System.out.println("\nBREADTH FIRST SEARCH");
-        Puzzle puzzle2 = new Puzzle(initBoard);
-        BfsSolver solver2 = new BfsSolver();
-        solver2.solve(puzzle2);
+        System.out.println("\nIBFS FIRST SEARCH");
+        Puzzle puzzle4 = new Puzzle(initBoard);
+        BfsSolver solver4 = new BfsSolver();
+        solver4.solve(puzzle4);
     }
 }

@@ -11,4 +11,14 @@ public class PrintUtil {
         System.out.println("\n ---- Execution time ---- \n");
         System.out.println(processExecutionTime + " millis\n\n");
     }
+
+    public static void printBoard(Puzzle puzzle) {
+        for (int i = 0; i < puzzle.getWidth(); i++) {
+            System.out.println();
+            for (int j = 0; j < puzzle.getWidth(); j++) {
+                System.out.print(puzzle.getBoard()[i][j]);
+            }
+        }
+        System.out.println("\n------------------------------\n");
+    }
 }

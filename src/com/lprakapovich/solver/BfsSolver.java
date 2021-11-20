@@ -6,12 +6,12 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class BfsSolver extends GraphTraversalSolver {
+public class BfsSolver extends UninformedGraphTraversalSolver {
 
-    Queue<Puzzle> candidateQueue = new LinkedList<>();
+    private final Queue<Puzzle> candidateQueue = new LinkedList<>();
 
     @Override
-    Puzzle getCandidateToExplore() {
+    public Puzzle getFirstCandidate() {
         return candidateQueue.poll();
     }
 
@@ -20,3 +20,4 @@ public class BfsSolver extends GraphTraversalSolver {
         return candidateQueue;
     }
 }
+
