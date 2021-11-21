@@ -3,7 +3,6 @@ package com.lprakapovich.puzzle;
 import com.lprakapovich.util.ArrayUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Puzzle {
 
@@ -38,6 +37,10 @@ public class Puzzle {
         return solutionSteps;
     }
 
+    public void setSolutionSteps(ArrayList<Step> steps) {
+        this.solutionSteps = steps;
+    }
+
     public void registerStep(Step step) {
         this.solutionSteps.add(step);
     }
@@ -56,8 +59,6 @@ public class Puzzle {
 
         return isEqual;
     }
-
-    public int getWidth() { return this.width; }
 
     public boolean isMovableTile(int row, int column) {
         return board[row][column] == 0;

@@ -40,6 +40,7 @@ public abstract class UninformedGraphTraversalSolver extends ProcessTimer implem
                     PrintUtil.printResult(candidate, getProcessExecutionTime());
                     break;
                 }
+
                 addPossibleSolutionsToQueue(candidate);
             }
         }
@@ -56,11 +57,10 @@ public abstract class UninformedGraphTraversalSolver extends ProcessTimer implem
         getCandidates().addAll(possibleSolutions);
     }
 
-
     private boolean isPuzzleExplored(Puzzle puzzle) {
         if (explored.isEmpty()) {
             return false;
         }
-        return explored.stream().anyMatch(seenPuzzle -> ArrayUtil.arraysAreEqual(seenPuzzle.getBoard(), puzzle.getBoard()));
+        return explored.stream().anyMatch(exploredPuzzle -> ArrayUtil.arraysAreEqual(exploredPuzzle.getBoard(), puzzle.getBoard()));
     }
 }
