@@ -3,7 +3,9 @@ package com.lprakapovich.solver;
 import com.lprakapovich.puzzle.Puzzle;
 import com.lprakapovich.util.PrintUtil;
 
-public class IdsSolver extends ProcessTimer {
+import static com.lprakapovich.solver.ProcessTimer.*;
+
+public class IdsSolver {
 
     private final static int MINIMAL_DEPTH = 0;
 

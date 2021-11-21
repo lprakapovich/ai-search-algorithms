@@ -7,7 +7,9 @@ import com.lprakapovich.util.PrintUtil;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public abstract class UninformedGraphTraversalSolver extends ProcessTimer implements PuzzleSolver {
+import static com.lprakapovich.solver.ProcessTimer.*;
+
+public abstract class UninformedGraphTraversalSolver implements PuzzleSolver {
 
     private boolean isSolved;
 

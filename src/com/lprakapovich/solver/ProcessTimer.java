@@ -1,20 +1,20 @@
 package com.lprakapovich.solver;
 
-public abstract class ProcessTimer {
+public class ProcessTimer {
 
-    private long executionStartTime;
+    private static long executionStartTime;
 
-    private long executionEndTime;
+    private static long executionEndTime;
 
-    public void startExecutionTimer() {
-        this.executionStartTime = System.currentTimeMillis();
+    public static void startExecutionTimer() {
+        executionStartTime = System.currentTimeMillis();
     }
 
-    public void endExecutionTimer() {
-        this.executionEndTime = System.currentTimeMillis();
+    public static void endExecutionTimer() {
+        executionEndTime = System.currentTimeMillis();
     }
 
-    public long getProcessExecutionTime() {
-        return (this.executionEndTime - this.executionStartTime);
+    public static long getProcessExecutionTime() {
+        return (executionEndTime - executionStartTime);
     }
 }
