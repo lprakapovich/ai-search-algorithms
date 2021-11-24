@@ -7,4 +7,17 @@ public class GoalBoard {
     public static int[][] getGoalBoard() {
         return goalBoard;
     }
+
+    public static int getHeuristic(int[][] boardToCompare) {
+        int heuristic = 0;
+        for (int i = 0; i < goalBoard.length; i++) {
+            for (int j = 0; j < goalBoard.length; j++) {
+                if (boardToCompare[i][j] != 0 && boardToCompare[i][j] != goalBoard[i][j]) {
+                    heuristic++;
+                }
+            }
+        }
+
+        return heuristic;
+    }
 }

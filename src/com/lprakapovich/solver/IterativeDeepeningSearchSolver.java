@@ -5,7 +5,7 @@ import com.lprakapovich.util.PrintUtil;
 
 import static com.lprakapovich.solver.ProcessTimer.*;
 
-public class IdsSolver {
+public class IterativeDeepeningSearchSolver {
 
     private final static int MINIMAL_DEPTH = 0;
 

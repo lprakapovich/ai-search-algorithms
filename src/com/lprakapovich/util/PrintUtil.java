@@ -19,6 +19,10 @@ public class PrintUtil {
         System.out.println(depth);
     }
 
+    public static void printFailure() {
+        System.out.println("Solution not found");
+    }
+
 //    public static void printBoard(Puzzle puzzle) {
 //        for (int i = 0; i < puzzle.getWidth(); i++) {
 //            System.out.println();

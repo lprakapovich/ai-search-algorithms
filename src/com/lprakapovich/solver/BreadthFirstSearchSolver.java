@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class BfsSolver extends UninformedGraphTraversalSolver {
+public class BreadthFirstSearchSolver extends UninformedGraphTraversalSolver {
 
     private final Queue<Puzzle> candidateQueue = new LinkedList<>();
 

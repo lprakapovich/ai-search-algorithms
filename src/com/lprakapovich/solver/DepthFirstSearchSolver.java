@@ -5,7 +5,7 @@ import com.lprakapovich.puzzle.Puzzle;
 import java.util.Collection;
 import java.util.Stack;
 
-public class DfsSolver extends UninformedGraphTraversalSolver {
+public class DepthFirstSearchSolver extends UninformedGraphTraversalSolver {
 
     private final Stack<Puzzle> candidateStack = new Stack<>();
 
