@@ -10,10 +10,11 @@ public class Puzzle {
     private final int[][] board;
     private ArrayList<Step> solutionSteps = new ArrayList<>();
 
-    public Puzzle upMoveChild;
-    public Puzzle downMoveChild;
-    public Puzzle leftMoveChild;
-    public Puzzle rightMoveChild;
+    private Puzzle parent;
+    private Puzzle upMoveChild;
+    private Puzzle downMoveChild;
+    private Puzzle leftMoveChild;
+    private Puzzle rightMoveChild;
 
     public Puzzle(int[][] board) {
         this.board = ArrayUtil.getArrayCopy(board);
@@ -29,10 +30,6 @@ public class Puzzle {
         return ArrayUtil.getArrayCopy(board);
     }
 
-    public int[][] getBoardCopy() {
-        return ArrayUtil.getArrayCopy(board);
-    }
-
     public ArrayList<Step> getSolutionSteps() {
         return solutionSteps;
     }
@@ -43,6 +40,12 @@ public class Puzzle {
 
     public void registerStep(Step step) {
         this.solutionSteps.add(step);
+    }
+
+    public Puzzle getParent() { return parent; }
+
+    public void setParent(Puzzle parent) {
+        this.parent = parent;
     }
 
     public boolean isGoalBoard() {
@@ -65,14 +68,7 @@ public class Puzzle {
     }
 
     public Position getMovableTilePosition() {
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < width; j++) {
-                if (isMovableTile(i, j)) {
-                    return new Position(i, j);
-                }
-            }
-        }
-        return new Position(-1, -1);
+        return ArrayUtil.findInArray(this::isMovableTile, board);
     }
 
     public void moveRight() {
@@ -124,6 +120,11 @@ public class Puzzle {
         leftMoveChild = new Puzzle(board, solutionSteps);
         upMoveChild = new Puzzle(board, solutionSteps);
         downMoveChild = new Puzzle(board, solutionSteps);
+
+        rightMoveChild.parent = this;
+        leftMoveChild.parent = this;
+        upMoveChild.parent = this;
+        downMoveChild.parent = this;
     }
 
     public ArrayList<Puzzle> getChildrenToExplore() {
@@ -151,6 +152,10 @@ public class Puzzle {
             leftMoveChild.moveLeft();
         }
         return children;
+    }
+
+    public int getDepth() {
+        return (parent != null ? parent.getDepth() : 0) + 1;
     }
 }
 
