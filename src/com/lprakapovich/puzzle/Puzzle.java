@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Puzzle {
 
-    private final int width = PuzzleConfig.DEFAULT_SIZE;
+    private final int width = GoalBoard.getWidth();
     private final int[][] board;
     private ArrayList<Step> solutionSteps = new ArrayList<>();
 

@@ -20,6 +20,10 @@ public class GoalBoard {
         return goalBoard;
     }
 
+    public static int getWidth() {
+        return width;
+    }
+
     public static int getHeuristic(int[][] boardToCompare) {
         int heuristic = 0;
         for (int i = 0; i < goalBoard.length; i++) {

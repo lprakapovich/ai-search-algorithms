@@ -42,7 +42,7 @@ public class BestFirstSearchSolver {
     }
 
     private void startHeuristicSearch() {
-        while (!candidates.isEmpty() || !solutionFound) {
+        while (!candidates.isEmpty() && !solutionFound) {
             Puzzle candidate = candidates.get(0);
             if (!isPuzzleExplored(candidate)) {
                 explored.add(candidate);

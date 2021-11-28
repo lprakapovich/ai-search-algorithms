@@ -11,6 +11,8 @@ import java.util.Scanner;
 
 public class Main {
 
+    private static Scanner in;
+
     public static void main(String[] args) {
 
         int [][] b15th = {
@@ -33,10 +35,9 @@ public class Main {
             System.exit(1);
         }
 
-        Scanner in = new Scanner(System.in);
+        in = new Scanner(System.in);
         System.out.println("Enter the width of the board:  ");
         int width = in.nextInt();
-
         if (width < 3) {
             width = 3;
             System.out.println("Width is set to minimum: 3");
@@ -47,28 +48,12 @@ public class Main {
         System.out.println("Goal board: ");
 
         GoalBoard.createGoalBoard(width);
-
-        int[][] userBoard = new int[width][width];
-
-        System.out.println("\nEnter the numbers to fill the board");
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < width; j++) {
-                userBoard[i][j] = in.nextInt();
-            }
-        }
-
-        System.out.println("\nYour board: ");
-        for (int i = 0; i < width; i++) {
-            System.out.println();
-            for (int j = 0; j < width; j++) {
-                System.out.print(userBoard[i][j] + " ");
-            }
-        }
-
+        int[][] userBoard = getUserInputBoard(width);
 
         String algorithm = args[0];
 
         switch (algorithm) {
+            case "all" -> compareAll(userBoard);
             case "bfs" -> solveBreadthFirstSearch(userBoard);
             case "dfs" -> solveDepthFirstSearch(userBoard);
             case "ids" -> solveIterativeDeepeningSearch(userBoard);
@@ -79,30 +64,55 @@ public class Main {
         in.close();
     }
 
+    private static int[][] getUserInputBoard(int width) {
+
+        int[][] inputUserBoard = new int[width][width];
+        System.out.println("\nEnter the numbers to fill the board");
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < width; j++) {
+                inputUserBoard[i][j] = in.nextInt();
+            }
+        }
+
+        System.out.println("\nYour board: ");
+        for (int i = 0; i < width; i++) {
+            System.out.println();
+            for (int j = 0; j < width; j++) {
+                System.out.print(inputUserBoard[i][j] + " ");
+            }
+        }
+
+        return inputUserBoard;
+    }
+
+    private static void compareAll(int[][] userBoard) {
+        solveBreadthFirstSearch(userBoard);
+        solveIterativeDeepeningSearch(userBoard);
+        solveBestFirstSearch(userBoard);
+        solveDepthFirstSearch(userBoard);
+    }
+
     private static void solveBestFirstSearch(int[][] userBoard) {
         System.out.println("\n\nHEURISTIC GREEDY BEST FIRST SEARCH");
-        BestFirstSearchSolver d = new BestFirstSearchSolver();
-        Puzzle p6 = new Puzzle(userBoard);
-        d.solve(p6);
+        BestFirstSearchSolver bfsSolver = new BestFirstSearchSolver();
+        bfsSolver.solve(new Puzzle(userBoard));
     }
 
     private static void solveIterativeDeepeningSearch(int[][] userBoard) {
         System.out.println("\n\nITERATIVE DEEPENING SEARCH");
-        IterativeDeepeningSearchSolver solver = new IterativeDeepeningSearchSolver();
-        solver.solve(new Puzzle(userBoard));
+        IterativeDeepeningSearchSolver idsSolver = new IterativeDeepeningSearchSolver();
+        idsSolver.solve(new Puzzle(userBoard));
     }
 
     private static void solveDepthFirstSearch(int[][] userBoard) {
         System.out.println("\n\nDEPTH FIRST SEARCH");
-        Puzzle puzzle3 = new Puzzle(userBoard);
-        DepthFirstSearchSolver solver3 = new DepthFirstSearchSolver();
-        solver3.solve(puzzle3);
+        DepthFirstSearchSolver dfsSolver = new DepthFirstSearchSolver();
+        dfsSolver.solve(new Puzzle(userBoard));
     }
 
     private static void solveBreadthFirstSearch(int[][] userBoard) {
         System.out.println("\n\nBREADTH FIRST SEARCH");
-        Puzzle puzzle4 = new Puzzle(userBoard);
-        BreadthFirstSearchSolver solver4 = new BreadthFirstSearchSolver();
-        solver4.solve(puzzle4);
+        BreadthFirstSearchSolver bfsSolver = new BreadthFirstSearchSolver();
+        bfsSolver.solve(new Puzzle(userBoard));
     }
 }
