@@ -10,7 +10,6 @@ public class Puzzle {
     private final int[][] board;
     private ArrayList<Step> solutionSteps = new ArrayList<>();
 
-    private Puzzle parent;
     private Puzzle upMoveChild;
     private Puzzle downMoveChild;
     private Puzzle leftMoveChild;
@@ -40,12 +39,6 @@ public class Puzzle {
 
     public void registerStep(Step step) {
         this.solutionSteps.add(step);
-    }
-
-    public Puzzle getParent() { return parent; }
-
-    public void setParent(Puzzle parent) {
-        this.parent = parent;
     }
 
     public boolean isGoalBoard() {
@@ -120,11 +113,6 @@ public class Puzzle {
         leftMoveChild = new Puzzle(board, solutionSteps);
         upMoveChild = new Puzzle(board, solutionSteps);
         downMoveChild = new Puzzle(board, solutionSteps);
-
-        rightMoveChild.parent = this;
-        leftMoveChild.parent = this;
-        upMoveChild.parent = this;
-        downMoveChild.parent = this;
     }
 
     public ArrayList<Puzzle> getChildrenToExplore() {
@@ -151,11 +139,8 @@ public class Puzzle {
             children.add(leftMoveChild);
             leftMoveChild.moveLeft();
         }
-        return children;
-    }
 
-    public int getDepth() {
-        return (parent != null ? parent.getDepth() : 0) + 1;
+        return children;
     }
 }
 

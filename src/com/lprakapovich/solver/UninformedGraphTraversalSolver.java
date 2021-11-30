@@ -32,7 +32,7 @@ public abstract class UninformedGraphTraversalSolver implements PuzzleSolver {
     }
 
     private void explore() {
-        while (!getCandidates().isEmpty() && !isSolved) {
+        while (!isSolved) {
             Puzzle candidate = getFirstCandidate();
             if (!isPuzzleExplored(candidate)) {
                 explored.add(candidate);

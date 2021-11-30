@@ -15,20 +15,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        int [][] b15th = {
-                {1, 2, 3, 4},
-                {5, 10, 6, 8},
-                {13, 9, 7, 11},
-                {0, 14, 15, 12}
-        };
-
-        int [][] b15th2 = {
-                {1, 2, 3, 4},
-                {5, 6, 7, 8},
-                {9, 10, 11, 12},
-                {13, 0, 14, 15}
-        };
-
         if (args.length == 0) {
             System.out.println("\n-- ERROR ---");
             System.out.println("\nSearching algorithm must be specified");
